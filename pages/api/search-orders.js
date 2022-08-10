@@ -1,4 +1,27 @@
+import Cors from "cors";
+
+function initMiddleware(middleware) {
+  return (req, res) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+}
+
+const cors = initMiddleware(
+  Cors({
+    methods: ["GET", "POST", "OPTIONS"],
+    origin: "*",
+  })
+);
+
 export default async (req, res) => {
+  await cors(req, res);
+
   const { domain, accessToken, searchEntry } = req.query;
   if (process.env.ACCESS_TOKEN !== accessToken) {
     return res.status(403).json({ error: "Denied" });

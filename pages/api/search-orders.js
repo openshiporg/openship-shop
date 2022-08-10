@@ -55,7 +55,7 @@ export default async (req, res) => {
   ];
   if (searchEntry) {
     const orders = allOrders.filter((order) =>
-      order.title.includes(searchEntry)
+      order.orderName.includes(searchEntry)
     );
     return res.status(200).json({ orders });
   }

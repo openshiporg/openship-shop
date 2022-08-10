@@ -53,7 +53,7 @@ export default async (req, res) => {
       ],
     },
   ];
-  if (searchEntry) {
+  if (searchEntry.trim()) {
     const orders = allOrders.filter((order) =>
       order.orderName.includes(searchEntry)
     );
